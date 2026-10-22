@@ -23,7 +23,7 @@ async def serve():
         if method == "initialize":
             reply(request.get("id"), {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}}, "serverInfo": {"name": "codex-subagent-orchestrator", "version": "0.1.0"}})
         elif method == "tools/list":
-            reply(request.get("id"), {"tools": [{"name": "delegate", "description": "按模型和推理强度并行启动子智能体", "inputSchema": {"type": "object", "required": ["task"], "properties": {"task": {"type": "string"}, "model": {"type": "string"}, "effort": {"type": "string", "enum": ["low", "medium", "high", "xhigh", "max", "ultra"]}, "count": {"type": "integer", "minimum": 1, "maximum": 32}}}}]})
+            reply(request.get("id"), {"tools": [{"name": "delegate", "description": "Run parallel subagents with a selected model and reasoning effort", "inputSchema": {"type": "object", "required": ["task"], "properties": {"task": {"type": "string"}, "model": {"type": "string"}, "effort": {"type": "string", "enum": ["low", "medium", "high", "xhigh", "max", "ultra"]}, "count": {"type": "integer", "minimum": 1, "maximum": 32}}}}]})
         elif method == "tools/call":
             args = request.get("params", {}).get("arguments", {})
             ns = argparse.Namespace(task=args["task"], model=args.get("model", "gpt-6.1-sol"), effort=args.get("effort", "medium"), count=args.get("count", 1), timeout=args.get("timeout", 900))

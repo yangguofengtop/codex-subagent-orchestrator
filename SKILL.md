@@ -1,20 +1,20 @@
 ---
 name: codex-subagent-orchestrator
-description: 按任务选择子智能体模型和推理强度，并行执行后汇总结果。
+description: Select subagent models and reasoning effort, run tasks in parallel, and summarize results.
 ---
 
-# Codex 子智能体编排器
+# Codex Subagent Orchestrator
 
-当用户要求拆分任务、并行处理或指定模型/强度时，使用本插件。
+Use this plugin when the user asks to split work, process tasks in parallel, or specify a model or reasoning effort.
 
-## 指令格式
+## Command format
 
 ```text
-/delegate <任务> [--model <模型>] [--effort <强度>] [--count <数量>]
+/delegate <task> [--model <model>] [--effort <effort>] [--count <count>]
 ```
 
-强度支持 `low`、`medium`、`high`、`xhigh`、`max`、`ultra`。未指定时使用 `medium`，模型未指定时使用 `gpt-6.1-sol`。
+Supported effort values are `low`, `medium`, `high`, `xhigh`, `max`, and `ultra`. The default effort is `medium`; the default model is `gpt-6.1-sol`.
 
-调用 `python orchestrator.py`，每个子任务使用独立进程执行，完成后按成功、失败和输出顺序汇总。
+Run `python orchestrator.py`. Each subtask runs in a separate process. Summarize results by status and subtask number.
 
-子任务提示词必须包含原始任务、子任务编号和“只返回可执行结论及必要证据”。
+Each subtask prompt must include the original task, its subtask number, and the instruction: "Return only actionable conclusions and necessary evidence."
