@@ -11,7 +11,7 @@ class OrchestratorTests(unittest.TestCase):
   def test_build_command_uses_all_values(self):
     old = __import__('os').environ.get("CODEX_SUBAGENT_COMMAND")
     __import__('os').environ["CODEX_SUBAGENT_COMMAND"] = "echo {model} {effort} {prompt}"
-    self.assertEqual(orchestrator.build_command("m", "high", "hello world"), ["echo", "m", "high", "hello", "world"])
+    self.assertEqual(orchestrator.build_command("m", "high", "hello world"), ["echo", "m", "high", "hello world"])
     if old is None: __import__('os').environ.pop("CODEX_SUBAGENT_COMMAND", None)
     else: __import__('os').environ["CODEX_SUBAGENT_COMMAND"] = old
 

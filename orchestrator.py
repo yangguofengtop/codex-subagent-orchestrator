@@ -18,10 +18,11 @@ def build_command(model: str, effort: str, prompt: str) -> list[str]:
     if not template:
         raise RuntimeError("Set CODEX_SUBAGENT_COMMAND with {model}, {effort}, and {prompt} placeholders.")
     try:
-        rendered = template.format(model=model, effort=effort, prompt=prompt)
+        tokens = shlex.split(template, posix=True)
+        rendered = [token.format(model=model, effort=effort, prompt=prompt) for token in tokens]
     except KeyError as exc:
         raise RuntimeError(f"CODEX_SUBAGENT_COMMAND has unknown placeholder: {exc.args[0]}") from exc
-    return shlex.split(rendered, posix=True)
+    return rendered
 
 async def run_one(index: int, prompt: str, model: str, effort: str, timeout: float) -> Result:
     proc = None
